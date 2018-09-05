@@ -47,24 +47,28 @@ impl Device {
 fn converge() {
     for _ in 0..10 {
         println!("---------");
-        let dev = Device::perfect();
+        let dev = Device::random();
         println!("{:?}", dev);
         let samples = [
-            dev.measure([0.0, 30.0, 30.0]),
-            dev.measure([0.0, 60.0, 60.0]),
-            dev.measure([0.0, 30.0, 120.0]),
-            dev.measure([0.0, 60.0, 30.0]),
-            dev.measure([0.0, 30.0, 60.0]),
-            dev.measure([0.0, 60.0, 120.0]),
+            dev.measure([30.0, 30.0, 30.0]),
+            dev.measure([60.0, 120.0, 60.0]),
+            dev.measure([120.0, 270.0, 120.0]),
+            dev.measure([60.0, 60.0, 270.0]),
+            dev.measure([120.0, 60.0, 90.0]),
+            dev.measure([270.0, 60.0, 30.0]),
         ];
         println!("{:?}", samples);
 
-        let mut cal = Cal::new(1.0);
-        for iter in 0..5 {
+        let mut cal = Cal::new(1.0, 0.1);
+        for iter in 0..50 {
             let error = dev.error(cal.adj());
-            println!("{}: error={}", iter, error);
-            cal.step(&samples);
-            println!("-- {:?}", cal);
+            println!("{}: error={} adj={:?}", iter, error, cal.adj());
+            if error < 0.0001 {
+                break;
+            }
+            if !cal.step(&samples) {
+                panic!("bad calibration data");
+            }
         }
     }
 }

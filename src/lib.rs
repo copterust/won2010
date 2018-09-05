@@ -27,13 +27,15 @@ impl Default for Adj {
 pub struct Cal {
     adj: [Adj; 3],
     gsq: f32,
+    min: f32,
 }
 
 impl Cal {
-    pub fn new(g: f32) -> Self {
+    pub fn new(g: f32, min: f32) -> Self {
         Cal {
             adj: Default::default(),
             gsq: g * g,
+            min: min,
         }
     }
 
@@ -55,11 +57,16 @@ impl Cal {
             err[i] = est_sq[0] + est_sq[1] + est_sq[2] - self.gsq;
         }
 
-        if !acc.try_inverse_mut() {
+        if (acc.determinant().abs() < self.min) {
             return false;
         }
 
-        let cal = acc * err;
+        let inv = match acc.try_inverse() {
+            Some(inv) => inv,
+            None => return false,
+        };
+
+        let cal = inv * err;
 
         let gain_sq = [
             1.0 / (1.0 - cal[0]).abs(),
