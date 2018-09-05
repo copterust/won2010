@@ -1,10 +1,10 @@
 extern crate nalgebra;
 use nalgebra::base::{Matrix1x6, Matrix6, Vector6};
 
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Adj {
-    gain: f32,
-    bias: f32,
+    pub gain: f32,
+    pub bias: f32,
 }
 
 impl Adj {
@@ -82,7 +82,7 @@ impl Cal {
         true
     }
 
-    pub fn done(self) -> [Adj; 3] {
+    pub fn adj(&self) -> [Adj; 3] {
         self.adj
     }
 }

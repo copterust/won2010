@@ -5,3 +5,6 @@ authors = ["Vickenty Fesunov <kent@setattr.net>"]
 
 [dependencies]
 nalgebra = "*"
+
+[dev-dependencies]
+rand = "*"
