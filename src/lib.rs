@@ -62,9 +62,9 @@ impl Cal {
         let cal = acc * err;
 
         let gain_sq = [
-            1.0 / (1.0 - cal[0]),
-            1.0 / (1.0 - cal[1]),
-            1.0 / (1.0 - cal[2]),
+            1.0 / (1.0 - cal[0]).abs(),
+            1.0 / (1.0 - cal[1]).abs(),
+            1.0 / (1.0 - cal[2]).abs(),
         ];
 
         let bias = [
