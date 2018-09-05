@@ -61,7 +61,11 @@ impl Cal {
 
         let cal = acc * err;
 
-        let gain_sq = [1.0 - cal[0], 1.0 - cal[1], 1.0 - cal[2]];
+        let gain_sq = [
+            1.0 / (1.0 - cal[0]),
+            1.0 / (1.0 - cal[1]),
+            1.0 / (1.0 - cal[2]),
+        ];
 
         let bias = [
             cal[3] * adj[0].gain * gain_sq[0] / 2.0,
