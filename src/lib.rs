@@ -57,7 +57,7 @@ impl Cal {
             err[i] = est_sq[0] + est_sq[1] + est_sq[2] - self.gsq;
         }
 
-        if (acc.determinant().abs() < self.min) {
+        if acc.determinant().abs() < self.min {
             return false;
         }
 
