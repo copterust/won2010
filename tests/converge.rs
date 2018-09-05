@@ -60,15 +60,20 @@ fn converge() {
         println!("{:?}", samples);
 
         let mut cal = Cal::new(1.0, 0.1);
+        let mut done = false;
         for iter in 0..50 {
             let error = dev.error(cal.adj());
             println!("{}: error={} adj={:?}", iter, error, cal.adj());
             if error < 0.0001 {
+                done = true;
                 break;
             }
             if !cal.step(&samples) {
                 panic!("bad calibration data");
             }
+        }
+        if !done {
+            panic!("did not converge");
         }
     }
 }
