@@ -80,11 +80,9 @@ impl Cal {
             cal[5] * adj[2].gain * gain_sq[2] / 2.0,
         ];
 
-        *adj = [
-            Adj::new(gain_sq[0].powf(0.5), bias[0]),
-            Adj::new(gain_sq[1].powf(0.5), bias[1]),
-            Adj::new(gain_sq[2].powf(0.5), bias[2]),
-        ];
+        for i in 0..3 {
+            adj[i] = Adj::new(adj[i].gain * gain_sq[i].powf(0.5), adj[i].bias + bias[i]);
+        }
 
         true
     }
