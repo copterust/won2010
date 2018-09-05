@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 extern crate nalgebra;
 use nalgebra::base::{Matrix1x6, Matrix6, Vector6};
 
