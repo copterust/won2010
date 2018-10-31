@@ -5,6 +5,10 @@ extern crate won2010;
 use nalgebra::{UnitQuaternion, Vector3};
 use won2010::{Adj, Cal};
 
+fn rad(d: f32) -> f32 {
+    d / 180.0 * ::std::f32::consts::PI
+}
+
 #[derive(Debug)]
 struct Device {
     gain: Vector3<f32>,
@@ -27,8 +31,8 @@ impl Device {
     }
 
     fn measure(&self, euler: [f32; 3]) -> [f32; 3] {
-        let q = UnitQuaternion::from_euler_angles(euler[0], euler[1], euler[2]);
-        let g = Vector3::new(1.0, 0.0, 0.0);
+        let q = UnitQuaternion::from_euler_angles(rad(euler[0]), rad(euler[1]), rad(euler[2]));
+        let g = Vector3::new(0.0, 0.0, 1.0);
         let a = (q * g).component_mul(&self.gain) + &self.bias;
         a.into()
     }
@@ -50,14 +54,14 @@ fn converge() {
         let dev = Device::random();
         println!("{:?}", dev);
         let samples = [
-            dev.measure([30.0, 30.0, 30.0]),
-            dev.measure([60.0, 120.0, 60.0]),
-            dev.measure([120.0, 270.0, 120.0]),
-            dev.measure([60.0, 60.0, 270.0]),
-            dev.measure([120.0, 60.0, 90.0]),
-            dev.measure([270.0, 60.0, 30.0]),
+            dev.measure([0.0, 0.0, 0.0]),
+            dev.measure([90.0, 45.0, 0.0]),
+            dev.measure([45.0, 90.0, 0.0]),
+            dev.measure([-90.0, -45.0, 0.0]),
+            dev.measure([-45.0, -90.0, 0.0]),
+            dev.measure([180.0, 0.0, 0.0]),
         ];
-        println!("{:?}", samples);
+        println!("{:#?}", samples);
 
         let mut cal = Cal::new(1.0, 0.1);
         let mut done = false;
