@@ -43,17 +43,17 @@ module clamp() {
 
 intersection() {
     union() {
-    rotate([0, 0, 45]) {
-        translate([d_hole/2,0,5]) {
-            clamp();
-        }
-        translate([-d_hole/2,0,5]) {
-            clamp();
-        }
-        scale([250, 10, 10]) {
-            cube(1, center=true);
+        rotate([0, 30, 45]) {
+            translate([d_hole/2,0,5]) {
+                clamp();
+            }
+            translate([-d_hole/2,0,5]) {
+                clamp();
+            }
+            scale([250, 10, 10]) {
+                cube(1, center=true);
+            }
         }
     }
-}
     cube(100, center=true);
 }
