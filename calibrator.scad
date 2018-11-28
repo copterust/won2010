@@ -1,39 +1,42 @@
 use<../f3-eva/printed/mpu9250.scad>;
 
 $fn = 30;
+cube_size = 50;
+
 mpu9250_dim = [26.1, 15.6, 0] + [2.6, 2.6, 2.6];
-mpu9250_pos = -mpu9250_dim/2 + [0, -5, 5 - 1.3];
+mpu9250_pos = -mpu9250_dim/2 + [0, -cube_size/20 + 2.0, cube_size/20 - 1.3];
 
 difference() {
-    cube(100, center=true);
-    translate([0, -25, 0]) {
-        cube(75, center=true);
+    cube(cube_size, center=true);
+    translate([0, -cube_size / 4, 0]) {
+        cube(cube_size - cube_size / 4, center=true);
     }
-        translate([0, 25, 0]) {
-        cube(75, center=true);
+        translate([0, cube_size / 4, 0]) {
+        cube(cube_size - cube_size / 4, center=true);
     }
-    translate([25, 0, 0]) {
-        cube(75, center=true);
+    translate([cube_size / 4, 0, 0]) {
+        cube(cube_size - cube_size / 4, center=true);
     }
-    translate([-25, 0, 0]) {
-        cube(75, center=true);
+    translate([-cube_size / 4, 0, 0]) {
+        cube(cube_size - cube_size / 4, center=true);
     }
-    translate([0, 0, 25]) {
-        cube(75, center=true);
+    translate([0, 0, cube_size / 4]) {
+        cube(cube_size - cube_size / 4, center=true);
     }
-    translate([0, 0, -25]) {
-        cube(75, center=true);
+    translate([0, 0, -cube_size / 4]) {
+        cube(cube_size - cube_size / 4, center=true);
     }
 }
 
+center_len = sqrt(pow(sqrt(pow(2 * cube_size, 2)), 2) + pow(cube_size, 2));
 intersection() {
     union() {
         rotate([0, 30, 45]) {
             translate(mpu9250_pos) {
                 mpu9250();
             }
-            cube([250, 10, 10], center=true);
+            cube([center_len, cube_size / 10, cube_size / 10], center=true);
         }
     }
-    cube(100, center=true);
+    cube(cube_size, center=true);
 }
