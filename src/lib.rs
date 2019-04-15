@@ -2,6 +2,7 @@
 
 extern crate nalgebra;
 use nalgebra::base::{Matrix1x6, Matrix6, Vector6};
+use nalgebra::Real;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Adj {
