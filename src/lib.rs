@@ -1,8 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-extern crate nalgebra;
+#[cfg(not(feature = "std"))]
+use libm::F32Ext;
+
 use nalgebra::base::{Matrix1x6, Matrix6, Vector6};
-use nalgebra::Real;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Adj {

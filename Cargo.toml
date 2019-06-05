@@ -2,12 +2,15 @@
 name = "won2010"
 version = "0.1.0"
 authors = ["Vickenty Fesunov <kent@setattr.net>"]
+edition = "2018"
 
 [dependencies]
-nalgebra = { version = "*", default-features=false }
+nalgebra = { version = "*", default-features = false }
+libm = { version = "*" }
 
 [features]
 std = [ "nalgebra/std" ]
+default = [ "std" ]
 
 [dev-dependencies]
 rand = "*"
